@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-tls-secret
+  namespace: argocd  # ArgoCD's namespace
+spec:
+  secretName: argocd-tls-secret
+  issuerRef:
+    name: letsencrypt-prod  # ClusterIssuer or Issuer name
+    kind: ClusterIssuer
+  dnsNames:
+    - argocd.sujeetkushwaha.shop  # ArgoCD's domain
+  commonName: argocd.sujeetkushwaha.shop  # ArgoCD's domain

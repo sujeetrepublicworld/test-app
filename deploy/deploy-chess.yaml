@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chess-game-deployment
+  namespace: chess
+  labels:
+    app: chess-game
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chess-game
+  template:
+    metadata:
+      labels:
+        app: chess-game
+    spec:
+      containers:
+      - name: chess-game
+        image: sujeetkushwaha14/pythonappchess:latest
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "500m"  # 0.5 CPU core
+            memory: "1Gi"  # 1 GiB of memory
+          limits:
+            cpu: "1"  # 1 CPU core max
+            memory: "2Gi"  # 2 GiB of memory max

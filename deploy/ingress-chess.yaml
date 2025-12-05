@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chess-game-ingress
+  namespace: chess
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"  # Redirect HTTP to HTTPS automatically
+    cert-manager.io/issuer: letsencrypt-prod  # Certificate manager's issuer for Let's Encrypt
+spec:
+  ingressClassName: nginx  # Ingress controller class for NGINX
+  rules:
+  - host: chess.sujeetkushwaha.shop  # Your domain
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: chess-game-service
+            port:
+              number: 80  # External port of the Service (mapped to container port 8000)
+  tls:
+  - hosts:
+    - chess.sujeetkushwaha.shop  # The domain for TLS
+    secretName: chess-game-tls  # The secret that holds the TLS certificate

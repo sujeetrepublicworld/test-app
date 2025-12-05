@@ -1,0 +1,15 @@
+---
+# TLS Certificate for chess.sujeetkushwaha.shop using cert-manager
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: chess-game-tls
+  namespace: chess
+spec:
+  secretName: chess-game-tls  # The name of the secret where the TLS certificate will be stored
+  issuerRef:
+    name: letsencrypt-prod  # Reference to the ClusterIssuer (assuming you already have it created)
+    kind: ClusterIssuer
+  dnsNames:
+    - chess.sujeetkushwaha.shop  # The domain for which the certificate will be issued
+---

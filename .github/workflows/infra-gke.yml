@@ -87,7 +87,7 @@ jobs:
       #--------------------------
       - name: Apply Argocd YAMLs
         run: |
-          kubectl apply -f test-app/argocd/
+          kubectl apply -f argocd/
 
       # --------------------------
       # Prometheus + Grafana + Loki + Tempo

@@ -55,7 +55,7 @@ jobs:
       # --------------------------
       - name: Install Ingress NGINX
         run: |
-          kubectl create namespace ingress-nginx || true
+          kubectl create namespace ingress-nginx --dry-run=client -o yaml | kubectl apply -f -
           helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
           helm repo update
           helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
@@ -66,7 +66,7 @@ jobs:
       # --------------------------
       - name: Install Cert-Manager
         run: |
-          kubectl create namespace cert-manager || true
+          kubectl create namespace cert-manager --dry-run=client -o yaml | kubectl apply -f -
           helm repo add jetstack https://charts.jetstack.io
           helm repo update
           helm upgrade --install cert-manager jetstack/cert-manager \
@@ -78,7 +78,7 @@ jobs:
       # --------------------------     
       - name: Install argocd
         run: |
-          kubectl create namespace argocd
+          kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
           helm repo add argo https://argoproj.github.io/argo-helm
           helm install argocd argo/argo-cd -n argocd
           
@@ -94,7 +94,7 @@ jobs:
       # --------------------------
       - name: Install Monitoring Stack
         run: |
-          kubectl create namespace monitoring || true
+          kubectl create namespace monitoring --dry-run=client -o yaml | kubectl apply -f -
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
           helm repo add grafana https://grafana.github.io/helm-charts
           helm repo update

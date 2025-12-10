@@ -132,18 +132,6 @@ jobs:
           helm upgrade --install loki grafana/loki-stack --namespace monitoring
           helm upgrade --install tempo grafana/tempo --namespace monitoring
 
-      # --------------------------
-      # Run the Deploy Script
-      # --------------------------
-      - name: Run Deploy Script
-        run: |
-          chmod +x ./deploy.sh
-          ./deploy.sh
-
-      # --------------------------
-      # Optional: Additional Verifications (Logs, Sync, etc.)
-      # --------------------------
-      - name: Verify Logs
         run: |
           kubectl logs -n monitoring $(kubectl get pods -n monitoring -l app=grafana -o jsonpath='{.items[0].metadata.name}')
           kubectl logs -n monitoring $(kubectl get pods -n monitoring -l app=prometheus -o jsonpath='{.items[0].metadata.name}')

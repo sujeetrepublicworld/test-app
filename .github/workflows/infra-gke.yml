@@ -7,8 +7,9 @@ on:
   pull_request:
 
 jobs:
-  terraform-and-helm:
-    name: Terraform Apply GKE & Deploy Apps
+  # Terraform Job
+  terraform:
+    name: Terraform Apply GKE
     runs-on: self-hosted
 
     env:
@@ -16,15 +17,15 @@ jobs:
       GOOGLE_REGION: "asia-south1"
 
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup Terraform
+      - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.0
 
-      - name: Setup GCP Credentials
+      - name: Set up GCP Credentials
         uses: google-github-actions/setup-gcloud@v2
         with:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
@@ -43,54 +44,58 @@ jobs:
         working-directory: ./infra
         run: terraform apply -auto-approve tfplan
 
-      # --------------------------
-      # Helm Setup
-      # --------------------------
-      - name: Setup Helm
+  # Helm Setup Job
+  helm-setup:
+    name: Helm Setup & Deploy Apps
+    runs-on: self-hosted
+    needs: terraform # Ensures Helm runs after Terraform
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Helm
         run: |
           curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
       # --------------------------
-      # Ingress NGINX
+      # Install Ingress NGINX
       # --------------------------
       - name: Install Ingress NGINX
         run: |
           kubectl create namespace ingress-nginx --dry-run=client -o yaml | kubectl apply -f -
           helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
           helm repo update
-          helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
-            --namespace ingress-nginx
+          helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx
 
       # --------------------------
-      # Cert-Manager
+      # Install Cert-Manager
       # --------------------------
       - name: Install Cert-Manager
         run: |
           kubectl create namespace cert-manager --dry-run=client -o yaml | kubectl apply -f -
           helm repo add jetstack https://charts.jetstack.io
           helm repo update
-          helm upgrade --install cert-manager jetstack/cert-manager \
-            --namespace cert-manager \
-            --set installCRDs=true
-      
+          helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --set installCRDs=true
+
       # --------------------------
-      # argocd
-      # --------------------------     
-      - name: Install argocd
+      # Install ArgoCD
+      # --------------------------
+      - name: Install ArgoCD
         run: |
           kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
           helm repo add argo https://argoproj.github.io/argo-helm
           helm upgrade --install argocd argo/argo-cd -n argocd
-          
-      #--------------------------
-      #argocd apply
-      #--------------------------
+
+      # --------------------------
+      # Apply Argocd YAMLs
+      # --------------------------
       - name: Apply Argocd YAMLs
         run: |
           kubectl apply -f argocd/
 
       # --------------------------
-      # Prometheus + Grafana + Loki + Tempo
+      # Install Monitoring Stack (Prometheus, Grafana, Loki, Tempo)
       # --------------------------
       - name: Install Monitoring Stack
         run: |
@@ -99,31 +104,33 @@ jobs:
           helm repo add grafana https://grafana.github.io/helm-charts
           helm repo update
 
-          # Prometheus + Grafana with custom values
+          # Custom values.yaml for Grafana Datasource
           cat <<EOF > monitoring-values.yaml
-grafana:
-  adminUser: admin
-  adminPassword: admin
-  datasources:
-    datasources.yaml:
-      apiVersion: 1
-      datasources:
-        - name: Prometheus
-          type: prometheus
-          access: proxy
-          url: http://kube-prom-stack-prometheus:9090
-          isDefault: true
-        - name: Loki
-          type: loki
-          access: proxy
-          url: http://loki.monitoring.svc.cluster.local:3100
-          isDefault: false
-EOF
+          grafana:
+            adminUser: admin
+            adminPassword: admin
+            datasources:
+              datasources.yaml:
+                apiVersion: 1
+                datasources:
+                  - name: Prometheus
+                    type: prometheus
+                    access: proxy
+                    url: http://kube-prom-stack-prometheus:9090
+                    isDefault: true
+                  - name: Loki
+                    type: loki
+                    access: proxy
+                    url: http://loki.monitoring.svc.cluster.local:3100
+                    isDefault: false
+          EOF
 
           # Prometheus + Grafana with custom values
-          helm upgrade --install kube-prom-stack prometheus-community/kube-prometheus-stack \
-            --namespace monitoring -f monitoring-values.yaml
+          helm upgrade --install kube-prom-stack prometheus-community/kube-prometheus-stack --namespace monitoring -f monitoring-values.yaml
 
           # Loki + Tempo
           helm upgrade --install loki grafana/loki-stack --namespace monitoring
           helm upgrade --install tempo grafana/tempo --namespace monitoring
+
+          kubectl logs -n monitoring $(kubectl get pods -n monitoring -l app=grafana -o jsonpath='{.items[0].metadata.name}')
+          kubectl logs -n monitoring $(kubectl get pods -n monitoring -l app=prometheus -o jsonpath='{.items[0].metadata.name}')

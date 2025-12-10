@@ -81,6 +81,13 @@ jobs:
           kubectl create namespace argocd
           helm repo add argo https://argoproj.github.io/argo-helm
           helm install argocd argo/argo-cd -n argocd
+          
+      #--------------------------
+      #argocd apply
+      #--------------------------
+      - name: Apply Argocd YAMLs
+        run: |
+          kubectl apply -f test-app/argocd/
 
       # --------------------------
       # Prometheus + Grafana + Loki + Tempo

@@ -7,9 +7,8 @@ on:
   pull_request:
 
 jobs:
-  # Terraform Job
-  terraform:
-    name: Terraform Apply GKE
+  terraform-and-helm:
+    name: Terraform Apply GKE & Deploy Apps
     runs-on: self-hosted
 
     env:
@@ -17,15 +16,15 @@ jobs:
       GOOGLE_REGION: "asia-south1"
 
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up Terraform
+      - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.5.0
 
-      - name: Set up GCP Credentials
+      - name: Setup GCP Credentials
         uses: google-github-actions/setup-gcloud@v2
         with:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
@@ -44,11 +43,12 @@ jobs:
         working-directory: ./infra
         run: terraform apply -auto-approve tfplan
 
+
   # Helm Setup Job
   helm-setup:
     name: Helm Setup & Deploy Apps
     runs-on: self-hosted
-    needs: terraform # Ensures Helm runs after Terraform
+    needs: terraform-and-helm # Ensures Helm runs after Terraform
 
     steps:
       - name: Checkout Code
@@ -132,5 +132,18 @@ jobs:
           helm upgrade --install loki grafana/loki-stack --namespace monitoring
           helm upgrade --install tempo grafana/tempo --namespace monitoring
 
+      # --------------------------
+      # Run the Deploy Script
+      # --------------------------
+      - name: Run Deploy Script
+        run: |
+          chmod +x ./deploy.sh
+          ./deploy.sh
+
+      # --------------------------
+      # Optional: Additional Verifications (Logs, Sync, etc.)
+      # --------------------------
+      - name: Verify Logs
+        run: |
           kubectl logs -n monitoring $(kubectl get pods -n monitoring -l app=grafana -o jsonpath='{.items[0].metadata.name}')
           kubectl logs -n monitoring $(kubectl get pods -n monitoring -l app=prometheus -o jsonpath='{.items[0].metadata.name}')

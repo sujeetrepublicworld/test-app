@@ -18,7 +18,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: kube-prom-stack-grafana  # Correct service name
+                name: grafana  # Correct service name
                 port:
                   number: 80  # Correct target port (80)
   tls:

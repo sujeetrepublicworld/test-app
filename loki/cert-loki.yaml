@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: loki-tls
+  namespace: monitoring
+spec:
+  secretName: loki-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: loki.sujeetkushwaha.shop
+  dnsNames:
+    - loki.sujeetkushwaha.shop

@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tempo-tls
+  namespace: monitoring
+spec:
+  secretName: tempo-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: tempo.sujeetkushwaha.shop
+  dnsNames:
+    - tempo.sujeetkushwaha.shop

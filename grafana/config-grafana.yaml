@@ -6,4 +6,5 @@ metadata:
 data:
   grafana.ini: |
     [server]
-    root_url = %(protocol)s://%(domain)s:%(http_port)s/
+    root_url = https://grafana.sujeetkushwaha.shop/
+    serve_from_sub_path = true

@@ -8,3 +8,20 @@ data:
     [server]
     root_url = https://grafana.sujeetkushwaha.shop/
     serve_from_sub_path = true
+    # Allow Grafana to listen on all network interfaces
+    http_addr = 0.0.0.0
+
+    [security]
+    # Disable admin login creation if you want to set via env or secret
+    admin_user = admin
+    admin_password = admin
+
+    [auth.anonymous]
+    # Enable anonymous access if you want users to see dashboards without login
+    enabled = true
+    org_role = Viewer
+
+    [dashboards.json]
+    # Automatic provisioning of dashboards from configMap
+    enabled = true
+    path = /var/lib/grafana/dashboards

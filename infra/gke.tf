@@ -100,5 +100,5 @@ resource "google_container_cluster" "gke" {
 variable "my_laptop_ip" {
   sensitive = true
   #default = "115.241.92.250/32"
-  default = "2409:40d0:18:79cf:dbef:401c:20d:9604/32"
+  default = "157.49.6.131/32"
 }

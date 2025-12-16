@@ -23,4 +23,4 @@ spec:
   tls:
   - hosts:
     - chess.sujeetkushwaha.shop  # The domain for TLS
-    secretName: chess-game-tls # The secret that holds the TLS certificate
+    secretName: chess-tls # The secret that holds the TLS certificate

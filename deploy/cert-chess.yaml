@@ -6,7 +6,7 @@ metadata:
 spec:
   secretName: chess-tls
   issuerRef:
-    name: letsencrypt-prod
     kind: ClusterIssuer
+    name: letsencrypt-prod
   dnsNames:
-  - chess.sujeetkushwaha.shop
+    - chess.sujeetkushwaha.shop

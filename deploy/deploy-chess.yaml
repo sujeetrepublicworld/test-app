@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: chess-game-deployment
-  namespace: chess
+  namespace: chess-game
   labels:
     app: chess-game
 spec:

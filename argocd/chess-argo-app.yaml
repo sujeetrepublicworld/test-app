@@ -18,7 +18,7 @@ spec:
     path: deploy  # Only 'deploy' folder
   destination:
     server: https://kubernetes.default.svc
-    namespace: chess  # Namespace is 'chess'
+    namespace: chess-game  # Namespace is 'chess'
   syncPolicy:
     automated:
       prune: true

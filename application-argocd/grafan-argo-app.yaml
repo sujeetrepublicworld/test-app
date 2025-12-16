@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/sujeetrepublicworld/test-app.git  # Aapke Git repo ka URL
+    targetRevision: HEAD
+    path: grafana  # Grafana ka path jo Git repo me hai
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring  # Namespace same rahega
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

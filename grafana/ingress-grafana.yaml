@@ -20,7 +20,7 @@ spec:
               service:
                 name: prometheus-grafana
                 port:
-                  number: 3000   # ✅ Must match service port
+                  number: 80   # ✅ Must match service port
   tls:
     - hosts:
         - grafana.sujeetkushwaha.shop

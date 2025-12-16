@@ -71,6 +71,18 @@ jobs:
       # --------------------------
       # Install Cert-Manager
       # --------------------------
+      - name: Cleanup old Cert-Manager resources
+        run: |
+          # Delete CRDs
+          kubectl get crds | grep cert-manager | awk '{print $1}' | xargs -r kubectl delete crd
+          # Delete namespace
+          kubectl delete namespace cert-manager --ignore-not-found
+          # Delete leftover clusterroles and bindings
+          for cr in cert-manager cert-manager-cainjector cert-manager-webhook cert-manager-controller-*; do
+            kubectl delete clusterrole $cr --ignore-not-found
+            kubectl delete clusterrolebinding $cr --ignore-not-found
+          done
+
       - name: Install Cert-Manager
         run: |
           kubectl create namespace cert-manager --dry-run=client -o yaml | kubectl apply -f -

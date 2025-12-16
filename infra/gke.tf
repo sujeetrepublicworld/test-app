@@ -94,6 +94,7 @@ resource "google_container_cluster" "gke" {
       max_node_count = 5
     }
   }
+   deletion_protection = false
 }
 
 # Replace this with your laptop's public IP

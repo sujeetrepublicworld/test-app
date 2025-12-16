@@ -4,9 +4,9 @@ metadata:
   name: chess-game-tls
   namespace: chess-game
 spec:
-  secretName: chess-game-tls
+  secretName: chess-game-tls  # The secret name where the certificate will be stored
   issuerRef:
-    name: letsencrypt-prod
+    name: letsencrypt-prod  # Make sure this ClusterIssuer is created and accessible
     kind: ClusterIssuer
   dnsNames:
     - chess.sujeetkushwaha.shop

@@ -1,10 +1,10 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: chess-game-tls
+  name: chess-game-tls-1
   namespace: chess
 spec:
-  secretName: chess-game-tls
+  secretName: chess-game-tls-1
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer

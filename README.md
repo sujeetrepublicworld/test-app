@@ -112,6 +112,6 @@ This repository contains Terraform configuration files used to set up a **privat
 
 ## grafana               https://grafana.sujeetkushwaha.shop
 ### user admin
-### pass EdWsmZBg4enp0WqsSyJUrOh7uxqhmlMuNYgvifzm
+### pass 8yajd7Ogrf9zquOEa3PNagQPAPCtSL5filg7Xqyx
 
 ## prometheus              https://prometheus.sujeetkushwaha.shop

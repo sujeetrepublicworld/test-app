@@ -28,8 +28,8 @@ spec:
             cpu: "1"  # 1 CPU core max
             memory: "2Gi"  # 2 GiB of memory max
         securityContext:
-          runAsUser: 1000
-          runAsGroup: 3000
+          runAsUser: 1000  # Non-root user
+          runAsGroup: 3000  # Non-root group
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
         livenessProbe:

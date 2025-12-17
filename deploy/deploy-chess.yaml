@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: chess-game
-        image: sujeetkushwaha14/pythonappchess:latest # Specific image tag
+        image: sujeetkushwaha14/pythonappchess:latest  # Specific image tag
         ports:
         - containerPort: 8000
         resources:
@@ -44,4 +44,10 @@ spec:
             port: 8000
           initialDelaySeconds: 5
           periodSeconds: 5
-
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          failureThreshold: 30

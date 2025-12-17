@@ -6,7 +6,11 @@ metadata:
 spec:
   secretName: chess-tls
   issuerRef:
-    kind: Issuer
     name: letsencrypt-prod
+    kind: Issuer
+  commonName: chess.sujeetkushwaha.shop
   dnsNames:
     - chess.sujeetkushwaha.shop
+  privateKey:
+    algorithm: RSA
+    size: 2048

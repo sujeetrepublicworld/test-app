@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: chess-game
-        image: sujeetkushwaha14/pythonappchess:v1.0.0  # Specific image tag
+        image: sujeetkushwaha14/pythonappchess:latest # Specific image tag
         ports:
         - containerPort: 8000
         resources:

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: chess-game
-        image: sujeetkushwaha14/pythonappchess:latest
+        image: sujeetkushwaha14/pythonappchess:v1.0.0  # Specific image tag
         ports:
         - containerPort: 8000
         resources:
@@ -27,3 +27,21 @@ spec:
           limits:
             cpu: "1"  # 1 CPU core max
             memory: "2Gi"  # 2 GiB of memory max
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 3000
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+

@@ -17,21 +17,16 @@ spec:
     spec:
       containers:
       - name: chess-game
-        image: sujeetkushwaha14/pythonappchess:latest  # Specific image tag
+        image: sujeetkushwaha14/pythonappchess:latest
         ports:
         - containerPort: 8000
         resources:
           requests:
-            cpu: "500m"  # 0.5 CPU core
-            memory: "1Gi"  # 1 GiB of memory
+            cpu: "500m"
+            memory: "1Gi"
           limits:
-            cpu: "1"  # 1 CPU core max
-            memory: "2Gi"  # 2 GiB of memory max
-        securityContext:
-          runAsUser: 1000  # Non-root user
-          runAsGroup: 3000  # Non-root group
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
+            cpu: "1"
+            memory: "2Gi"
         livenessProbe:
           httpGet:
             path: /health

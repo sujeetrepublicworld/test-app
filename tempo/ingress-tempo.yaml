@@ -1,27 +1,25 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: tempo-ingress
-  namespace: monitoring
+  name: test-app-ingress
+  namespace: default
   annotations:
-    kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/backend-protocol: HTTP
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
-  ingressClassName: nginx
+  tls:
+    - hosts:
+        - sujeetkushwaha.shop
+      secretName: test-app-tls
   rules:
-    - host: tempo.sujeetkushwaha.shop
+    - host: sujeetkushwaha.shop
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: tempo
+                name: test-app-service
                 port:
-                  number: 3200
-  tls:
-    - hosts:
-        - tempo.sujeetkushwaha.shop
-      secretName: tempo-tls
+                  number: 80

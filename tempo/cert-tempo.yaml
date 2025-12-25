@@ -1,13 +1,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: tempo-tls
-  namespace: monitoring
+  name: test-app-tls
+  namespace: default
 spec:
-  secretName: tempo-tls
+  secretName: test-app-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: tempo.sujeetkushwaha.shop
+  commonName: sujeetkushwaha.shop
   dnsNames:
-    - tempo.sujeetkushwaha.shop
+    - sujeetkushwaha.shop

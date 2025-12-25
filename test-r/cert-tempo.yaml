@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: test-app-tls
+  namespace: testrb
+spec:
+  secretName: test-app-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: republic.sujeetkushwaha.shop
+  dnsNames:
+    - republic.sujeetkushwaha.shop

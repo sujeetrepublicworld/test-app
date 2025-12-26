@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sumit-welcome-svc
+  namespace: test-sample
+spec:
+  selector:
+    app: test-sample-app
+  ports:
+  - port: 80
+    targetPort: 80

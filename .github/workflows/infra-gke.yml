@@ -3,7 +3,7 @@ name: Terraform GKE + Apps
 on:
   push:
     branches:
-      - none
+      - main
   pull_request:
 
 jobs:
@@ -44,49 +44,49 @@ jobs:
       #   run: terraform apply -auto-approve tfplan
 
 
-  # Helm Setup Job
-  helm-setup:
-    name: Helm Setup & Deploy Apps
-    runs-on: self-hosted
-    needs: terraform-and-helm # Ensures Helm runs after Terraform
+  # # Helm Setup Job
+  # helm-setup:
+  #   name: Helm Setup & Deploy Apps
+  #   runs-on: self-hosted
+  #   needs: terraform-and-helm # Ensures Helm runs after Terraform
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v3
 
-      - name: Set up Helm
-        run: |
-          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+  #     - name: Set up Helm
+  #       run: |
+  #         curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-      # --------------------------
-      # Install Ingress NGINX
-      # --------------------------
-      - name: Install Ingress NGINX
-        run: |
-          kubectl create namespace ingress-nginx --dry-run=client -o yaml | kubectl apply -f -
-          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-          helm repo update
-          helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx
+  #     # --------------------------
+  #     # Install Ingress NGINX
+  #     # --------------------------
+  #     - name: Install Ingress NGINX
+  #       run: |
+  #         kubectl create namespace ingress-nginx --dry-run=client -o yaml | kubectl apply -f -
+  #         helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+  #         helm repo update
+  #         helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx
      
-      # --------------------------
-      # Install Ingress NGINX
-      # --------------------------         
+  #     # --------------------------
+  #     # Install Ingress NGINX
+  #     # --------------------------         
 
-      - name: install cert-maneger
-        run: |
-          kubectl create namespace cert-manager --dry-run=client -o yaml | kubectl apply -f -
-          helm repo add jetstack https://charts.jetstack.io
-          helm repo update
-          helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --set installCRDs=true
+  #     - name: install cert-maneger
+  #       run: |
+  #         kubectl create namespace cert-manager --dry-run=client -o yaml | kubectl apply -f -
+  #         helm repo add jetstack https://charts.jetstack.io
+  #         helm repo update
+  #         helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --set installCRDs=true
 
-      # --------------------------
-      # Install ArgoCD
-      # --------------------------
-      - name: Install ArgoCD
-        run: |
-          kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
-          helm repo add argo https://argoproj.github.io/argo-helm
-          helm upgrade --install argocd argo/argo-cd -n argocd
+  #     # --------------------------
+  #     # Install ArgoCD
+  #     # --------------------------
+  #     - name: Install ArgoCD
+  #       run: |
+  #         kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
+  #         helm repo add argo https://argoproj.github.io/argo-helm
+  #         helm upgrade --install argocd argo/argo-cd -n argocd
 
       # --------------------------
       # Apply Argocd YAMLs

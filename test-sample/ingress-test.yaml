@@ -10,10 +10,7 @@ metadata:
     # 🚫 Disable cache (NGINX Ingress)
     nginx.ingress.kubernetes.io/proxy-no-cache: "1"
     nginx.ingress.kubernetes.io/proxy-cache-bypass: "1"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      add_header Cache-Control "no-store, no-cache, max-age=0, must-revalidate" always;
-      add_header Pragma "no-cache" always;
-      add_header Expires "0" always;
+
 spec:
   ingressClassName: nginx
   tls:

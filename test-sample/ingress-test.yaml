@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-prod
 
-    # 🚫 Cache disable
+    # 🚫 Disable cache (NGINX Ingress)
     nginx.ingress.kubernetes.io/proxy-no-cache: "1"
     nginx.ingress.kubernetes.io/proxy-cache-bypass: "1"
     nginx.ingress.kubernetes.io/configuration-snippet: |
@@ -15,18 +15,19 @@ metadata:
       add_header Pragma "no-cache" always;
       add_header Expires "0" always;
 spec:
+  ingressClassName: nginx
   tls:
-  - hosts:
-    - sumit.sujeetkushwaha.shop
-    secretName: test-sample-tls
+    - hosts:
+        - sumit.sujeetkushwaha.shop
+      secretName: test-sample-tls
   rules:
-  - host: sumit.sujeetkushwaha.shop
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: sumit-welcome-svc   # ⚠️ apne service name se match kare
-            port:
-              number: 80
+    - host: sumit.sujeetkushwaha.shop
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sumit-welcome-svc
+                port:
+                  number: 80

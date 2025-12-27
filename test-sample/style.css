@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: 'Segoe UI', Arial;
+  color: #fff;
+}
+
+.container {
+  text-align: center;
+  z-index: 10;
+}
+
+.crown {
+  font-size: 70px;
+  color: gold;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 56px;
+  margin: 10px 0;
+}
+
+.subtitle {
+  font-size: 22px;
+  opacity: 0.95;
+}
+
+.subtitle i {
+  color: gold;
+  margin: 0 5px;
+}
+
+/* 🎈 Balloon */
+.balloon {
+  position: absolute;
+  bottom: -120px;
+  width: 50px;
+  height: 70px;
+  border-radius: 50%;
+  animation: fly 6s linear infinite;
+}
+
+.balloon::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 40px;
+  background: #fff;
+  top: 70px;
+  left: 50%;
+}
+
+@keyframes fly {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-120vh);
+    opacity: 0;
+  }
+}

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: test-app
-          image: sujeetkushwaha14/testapprepublic:v2.5
+          image: sujeetkushwaha14/testapprepublic:v2.4
           ports:
             - containerPort: 8080
           resources:

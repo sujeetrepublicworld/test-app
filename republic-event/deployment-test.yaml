@@ -15,9 +15,9 @@ spec:
     spec:
       containers:
         - name: test-app
-          image: sujeetkushwaha14/republic-event:v1
+          image: sujeetkushwaha14/republic-aisummit:v1
           ports:
-            - containerPort: 8001
+            - containerPort: 3004
           resources:
             requests:
               cpu: "2000m"       

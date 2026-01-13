@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: test-app
-          image: sujeetkushwaha14/svelte-eng:v1.2  
+          image: sujeetkushwaha14/nationrcolect:v1  
           ports:
             - containerPort: 8080
           resources:

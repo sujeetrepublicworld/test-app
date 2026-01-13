@@ -2,12 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: test-app-service
-  namespace: default
+  namespace: republicworld
 spec:
   selector:
     app: test-app
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 3003
+      targetPort: 8001
   type: ClusterIP

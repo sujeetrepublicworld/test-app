@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: test-app
-  namespace: default
+  namespace: republicworld
 spec:
   replicas: 2
   selector:
@@ -15,9 +15,9 @@ spec:
     spec:
       containers:
         - name: test-app
-          image: sujeetkushwaha14/repubpositinfu:v1
+          image: sujeetkushwaha14/republic-event:v1
           ports:
-            - containerPort: 3003
+            - containerPort: 8001
           resources:
             requests:
               cpu: "2000m"       

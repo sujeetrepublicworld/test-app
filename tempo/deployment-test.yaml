@@ -17,7 +17,7 @@ spec:
         - name: test-app
           image: sujeetkushwaha14/nationrcolect:v1  
           ports:
-            - containerPort: 8080
+            - containerPort: 8001
           resources:
             requests:
               cpu: "2000m"       

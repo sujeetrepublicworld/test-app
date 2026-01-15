@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: test-app
-          image: sujeetkushwaha14/repubpositinfu:v1
+          image: sujeetkushwaha14/nationalcollective:v1.0
           ports:
             - containerPort: 3003
           resources:

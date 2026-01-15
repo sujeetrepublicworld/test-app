@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: test-app
-          image: sujeetkushwaha14/nationalcollective:v1.0
+          image: ujeetkushwaha14/republic-aisummit:v1
           ports:
             - containerPort: 3003
           resources:

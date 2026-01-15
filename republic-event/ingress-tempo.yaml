@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - test-summitai.republicworld.com
+        - pre-summitai.republicworld.com
       secretName: test-app-tls
   rules:
-    - host: test-summitai.republicworld.com
+    - host: pre-summitai.republicworld.com
       http:
         paths:
           - path: /

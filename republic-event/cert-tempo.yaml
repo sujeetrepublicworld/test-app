@@ -8,6 +8,6 @@ spec:
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: test-summitai.republicworld.com
+  commonName: pre-summitai.republicworld.com
   dnsNames:
-    - test-summitai.republicworld.com
+    - pre-summitai.republicworld.com

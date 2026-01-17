@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: test-app-tls
+  namespace: republicworld1
+spec:
+  secretName: test-app-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: ai-summit-awards-2026.republicworld.com
+  dnsNames:
+    - ai-summit-awards-2026.republicworld.com

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: sujeetkushwaha14/sumit-welcome:v90
+        image: sujeetkushwaha14/welcome:v1 
         imagePullPolicy: Always
         ports:
         - containerPort: 80
